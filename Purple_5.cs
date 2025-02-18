@@ -1,4 +1,4 @@
-namespace Purple_5
+namespace Lab_6
 {
     public class Purple_5
     {
@@ -68,6 +68,13 @@ namespace Purple_5
 
                 return result;
             }
+
+            public void Print()
+            {
+                System.Console.WriteLine(
+                    $"Ответ: {this.Animal}, {this.CharacterTrait}, {this.Concept}"
+                );
+            }
         }
 
         public struct Research
@@ -127,6 +134,18 @@ namespace Purple_5
                     .ToArray();
 
                 return sorted.Take(int.Min(5, sorted.Length)).Select(r => r.Key).ToArray();
+            }
+
+            public void Print()
+            {
+                System.Console.WriteLine($"Исследование {this.Name}");
+                if (this.Responses.Length == 0)
+                    return;
+                foreach (Response r in this.Responses)
+                {
+                    Console.Write("\t");
+                    r.Print();
+                }
             }
         }
     }
