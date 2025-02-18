@@ -1,6 +1,6 @@
-namespace Purple_1
+namespace Lab_6
 {
-    class Purple_1
+    public class Purple_1
     {
         public struct Participant
         {
@@ -13,10 +13,14 @@ namespace Purple_1
             public string Name => _name;
             public string Surname => _surname;
 
+            public void Print() { }
+
             public double[] Coefs
             {
                 get
                 {
+                    if (this._coefs == null)
+                        return new double[4];
                     double[] copy = new double[4];
                     this._coefs.CopyTo(copy, 0);
                     return copy;
@@ -27,6 +31,8 @@ namespace Purple_1
             {
                 get
                 {
+                    if (this._marks == null)
+                        return new int[4, 7];
                     int[,] copy = new int[4, 7];
                     Array.Copy(this._marks, copy, this._marks.Length);
                     return copy;
@@ -89,6 +95,8 @@ namespace Purple_1
                         return;
                 }
 
+                if (this._coefs == null)
+                    this._coefs = new double[4];
                 Array.Copy(coefs, this._coefs, 4);
             }
 
@@ -107,6 +115,8 @@ namespace Purple_1
                         return;
                 }
 
+                if (this._marks == null)
+                    this._marks = new int[4, 7];
                 for (int judge = 0; judge < 7; judge++)
                 {
                     this._marks[this._jumpsRecorded, judge] = marks[judge];

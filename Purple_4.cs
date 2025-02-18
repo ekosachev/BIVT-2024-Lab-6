@@ -31,6 +31,13 @@ namespace Purple_4
                 this._time = time;
                 this._timeRecorded = true;
             }
+
+            public void Print()
+            {
+                System.Console.WriteLine(
+                    $"{this.Name} {this.Surname}, {(this.TimeRecorded ? this.Time.ToString() : "не бегал")}"
+                );
+            }
         }
 
         public struct Group
@@ -43,6 +50,10 @@ namespace Purple_4
             {
                 get
                 {
+                    if (this._sportsmen == null)
+                    {
+                        return new Sportsman[] { };
+                    }
                     Sportsman[] copy = new Sportsman[_sportsmen.Length];
                     Array.Copy(_sportsmen, copy, _sportsmen.Length);
                     return copy;
@@ -94,6 +105,8 @@ namespace Purple_4
 
             public void Sort()
             {
+                if (this.Sportsmen.Length < 2)
+                    return;
                 if (this.Sportsmen.Any(s => !s.TimeRecorded))
                     return;
 
@@ -127,6 +140,19 @@ namespace Purple_4
                 newGroup.Add(newArray);
 
                 return newGroup;
+            }
+
+            public void Print()
+            {
+                System.Console.WriteLine($"Группа '{this.Name}'");
+                if (this.Sportsmen.Length == 0)
+                    return;
+
+                foreach (Sportsman s in this.Sportsmen)
+                {
+                    Console.Write("\t");
+                    s.Print();
+                }
             }
         }
     }

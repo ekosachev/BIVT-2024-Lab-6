@@ -1,4 +1,4 @@
-namespace Purple_2
+namespace Lab_6
 {
     public class Purple_2
     {
@@ -18,6 +18,8 @@ namespace Purple_2
             {
                 get
                 {
+                    if (this._marks == null)
+                        return new int[5];
                     int[] copy = new int[5];
                     Array.Copy(_marks, copy, 5);
                     return copy;
@@ -52,12 +54,15 @@ namespace Purple_2
                 }
             }
 
+            public void Print() { }
+
             public Participant(string name, string surname)
             {
                 this._name = name;
                 this._surname = surname;
                 this._marks = new int[5] { 0, 0, 0, 0, 0 };
                 this._distance = 0;
+                this._hasJumped = false;
             }
 
             public void Jump(int distance, int[] marks)
@@ -73,12 +78,16 @@ namespace Purple_2
                     return;
 
                 this._distance = distance;
+                this._hasJumped = true;
                 Array.Copy(marks, this._marks, 5);
             }
 
             public static void Sort(Participant[] array)
             {
                 if (array == null)
+                    return;
+
+                if (array.Length <= 1)
                     return;
 
                 Participant[] sorted = array.OrderByDescending(p => p.Result).ToArray();

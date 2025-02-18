@@ -36,7 +36,7 @@ namespace Purple_5
                 }
             }
 
-            public static int CountVotes(Response[] responses, int questionNumber)
+            public int CountVotes(Response[] responses, int questionNumber)
             {
                 if (responses == null)
                     return 0;
@@ -80,6 +80,8 @@ namespace Purple_5
             {
                 get
                 {
+                    if (this._responses == null)
+                        return new Response[] { };
                     Response[] copy = new Response[_responses.Length];
                     _responses.CopyTo(copy, 0);
                     return copy;

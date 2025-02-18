@@ -1,4 +1,4 @@
-namespace Purple_3
+namespace Lab_6
 {
     public class Purple_3
     {
@@ -18,6 +18,8 @@ namespace Purple_3
             {
                 get
                 {
+                    if (this._marks == null)
+                        return new double[7];
                     double[] copy = new double[_marks.Length];
                     Array.Copy(_marks, copy, _marks.Length);
                     return copy;
@@ -28,6 +30,8 @@ namespace Purple_3
             {
                 get
                 {
+                    if (this._marks == null)
+                        return new int[7];
                     int[] copy = new int[_places.Length];
                     Array.Copy(_places, copy, _places.Length);
                     return copy;
@@ -36,7 +40,9 @@ namespace Purple_3
 
             public int Score => Places.Sum();
             public double TotalMarks => Marks.Sum();
-            public int BestPlace => Places.Max();
+            public int BestPlace => Places.Min();
+
+            public void Print() { }
 
             public Participant(string name, string surname)
             {
@@ -55,6 +61,8 @@ namespace Purple_3
                     return;
                 if (result < 0.0 || result > 6.0)
                     return;
+                if (this._marks == null)
+                    this._marks = new double[7];
                 this._marks[this._scoresRecorded++] = result;
                 if (this._scoresRecorded >= 7)
                     this._scoresFilled = true;
@@ -63,6 +71,10 @@ namespace Purple_3
             public static void SetPlaces(Participant[] participants)
             {
                 if (participants == null)
+                    return;
+                if (participants.Length == 0)
+                    return;
+                if (participants.Any(p => p._marks == null || p._places == null))
                     return;
                 if (participants.Any(p => !p._scoresFilled))
                     return;
@@ -103,6 +115,8 @@ namespace Purple_3
             public static void Sort(Participant[] array)
             {
                 if (array == null)
+                    return;
+                if (array.Length < 2)
                     return;
                 if (array.Any(p => !p._placesFilled))
                     return;
