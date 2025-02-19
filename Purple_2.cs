@@ -48,7 +48,7 @@ namespace Lab_6
                     stylePoints -= worstMark;
                     stylePoints -= bestMark;
 
-                    int distancePoints = int.Max(0, 60 - 2 * (Distance - 120));
+                    int distancePoints = int.Max(0, 60 + 2 * (Distance - 120));
 
                     return stylePoints + distancePoints;
                 }
