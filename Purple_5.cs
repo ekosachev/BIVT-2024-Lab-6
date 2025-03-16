@@ -19,7 +19,7 @@ namespace Lab_6
                 this._concept = concept;
             }
 
-            public string GetAnswer(int question)
+            internal string GetAnswer(int question)
             {
                 if (question > 3 || question < 1)
                     return "";
@@ -83,12 +83,12 @@ namespace Lab_6
             private Response[] _responses;
 
             public string Name => _name;
-            public Response[] Responses
+            public Response[]? Responses
             {
                 get
                 {
                     if (this._responses == null)
-                        return new Response[] { };
+                        return null;
                     Response[] copy = new Response[_responses.Length];
                     _responses.CopyTo(copy, 0);
                     return copy;
@@ -108,6 +108,8 @@ namespace Lab_6
                 if (answers.Length != 3)
                     return;
 
+                if (this.Responses == null)
+                    return;
                 Response newResponse = new Response(answers[0], answers[1], answers[2]);
 
                 Response[] newArray = new Response[this.Responses.Length + 1];
@@ -117,11 +119,13 @@ namespace Lab_6
                 this._responses = newArray;
             }
 
-            public string[] GetTopResponses(int question)
+            public string[]? GetTopResponses(int question)
             {
+                if (this.Responses == null)
+                    return null;
                 if (question < 1 || question > 3)
                     return new string[0];
-                if (this.Responses.Length == 0 || this.Responses == null)
+                if (this.Responses.Length == 0)
                     return new string[0];
 
                 var sorted = this
@@ -139,6 +143,8 @@ namespace Lab_6
             public void Print()
             {
                 System.Console.WriteLine($"Исследование {this.Name}");
+                if (this.Responses == null)
+                    return;
                 if (this.Responses.Length == 0)
                     return;
                 foreach (Response r in this.Responses)

@@ -1,4 +1,4 @@
-namespace Purple_4
+namespace Lab_6
 {
     public class Purple_4
     {
@@ -12,7 +12,7 @@ namespace Purple_4
             public string Name => _name;
             public string Surname => _surname;
             public double Time => _time;
-            public bool TimeRecorded => _timeRecorded;
+            internal bool TimeRecorded => _timeRecorded;
 
             public Sportsman(string name, string surname)
             {
@@ -46,13 +46,13 @@ namespace Purple_4
             private Sportsman[] _sportsmen;
 
             public string Name => _name;
-            public Sportsman[] Sportsmen
+            public Sportsman[]? Sportsmen
             {
                 get
                 {
                     if (this._sportsmen == null)
                     {
-                        return new Sportsman[] { };
+                        return null;
                     }
                     Sportsman[] copy = new Sportsman[_sportsmen.Length];
                     Array.Copy(_sportsmen, copy, _sportsmen.Length);
@@ -68,6 +68,8 @@ namespace Purple_4
 
             public Group(Group otherGroup)
             {
+                if (otherGroup.Sportsmen == null)
+                    return;
                 this._name = otherGroup.Name;
                 this._sportsmen = new Sportsman[] { };
                 Array.Copy(otherGroup.Sportsmen, this._sportsmen, otherGroup.Sportsmen.Length);
@@ -75,6 +77,8 @@ namespace Purple_4
 
             public void Add(Sportsman sportsman)
             {
+                if (this.Sportsmen == null)
+                    return;
                 Sportsman[] oldArray = this.Sportsmen;
                 this._sportsmen = new Sportsman[oldArray.Length + 1];
                 Array.Copy(oldArray, this._sportsmen, oldArray.Length);
@@ -86,6 +90,8 @@ namespace Purple_4
                 if (sportsmen == null)
                     return;
 
+                if (this.Sportsmen == null)
+                    return;
                 Sportsman[] oldArray = this.Sportsmen;
                 this._sportsmen = new Sportsman[oldArray.Length + sportsmen.Length];
                 oldArray.CopyTo(this._sportsmen, 0);
@@ -94,6 +100,8 @@ namespace Purple_4
 
             public void Add(Group otherGroup)
             {
+                if (this.Sportsmen == null || otherGroup.Sportsmen == null)
+                    return;
                 Sportsman[] oldArray = this.Sportsmen;
                 Sportsman[] otherArrray = otherGroup.Sportsmen;
 
@@ -105,16 +113,21 @@ namespace Purple_4
 
             public void Sort()
             {
+                if (this.Sportsmen == null)
+                    return;
                 if (this.Sportsmen.Length < 2)
                     return;
                 if (this.Sportsmen.Any(s => !s.TimeRecorded))
                     return;
 
                 Sportsman[] sorted = this.Sportsmen.OrderBy(s => s.Time).ToArray();
+                Array.Copy(sorted, this.Sportsmen, sorted.Length);
             }
 
-            public static Group Merge(Group group1, Group group2)
+            public static Group? Merge(Group group1, Group group2)
             {
+                if (group1.Sportsmen == null || group2.Sportsmen == null)
+                    return null;
                 Sportsman[] array1 = group1.Sportsmen;
                 Sportsman[] array2 = group2.Sportsmen;
 
@@ -124,7 +137,7 @@ namespace Purple_4
                 int i2 = 0;
                 int iTotal = 0;
 
-                while (iTotal < newArray.Length)
+                while (iTotal < newArray.Length && i1 < array1.Length && i2 < array2.Length)
                 {
                     if (array1[i1].Time <= array2[i2].Time)
                     {
@@ -136,6 +149,11 @@ namespace Purple_4
                     }
                 }
 
+                while (i1 < array1.Length)
+                    newArray[iTotal++] = array1[i1++];
+                while (i2 < array2.Length)
+                    newArray[iTotal++] = array2[i2++];
+
                 Group newGroup = new Group("Финалисты");
                 newGroup.Add(newArray);
 
@@ -145,6 +163,8 @@ namespace Purple_4
             public void Print()
             {
                 System.Console.WriteLine($"Группа '{this.Name}'");
+                if (this.Sportsmen == null)
+                    return;
                 if (this.Sportsmen.Length == 0)
                     return;
 

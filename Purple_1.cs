@@ -15,24 +15,24 @@ namespace Lab_6
 
             public void Print() { }
 
-            public double[] Coefs
+            public double[]? Coefs
             {
                 get
                 {
                     if (this._coefs == null)
-                        return new double[4];
+                        return null;
                     double[] copy = new double[4];
                     this._coefs.CopyTo(copy, 0);
                     return copy;
                 }
             }
 
-            public int[,] Marks
+            public int[,]? Marks
             {
                 get
                 {
                     if (this._marks == null)
-                        return new int[4, 7];
+                        return null;
                     int[,] copy = new int[4, 7];
                     Array.Copy(this._marks, copy, this._marks.Length);
                     return copy;
@@ -43,6 +43,8 @@ namespace Lab_6
             {
                 get
                 {
+                    if (this.Marks == null || this.Coefs == null)
+                        return 0.0;
                     double score = 0.0;
                     for (int jump = 0; jump < 4; jump++)
                     {
@@ -131,7 +133,7 @@ namespace Lab_6
                     return;
 
                 Participant[] sorted = array.OrderByDescending(p => p.TotalScore).ToArray();
-                array = sorted;
+                Array.Copy(sorted, array, sorted.Length);
             }
         }
     }

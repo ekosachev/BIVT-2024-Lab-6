@@ -14,12 +14,12 @@ namespace Lab_6
             public string Surname => _surname;
             public int Distance => _distance;
 
-            public int[] Marks
+            public int[]? Marks
             {
                 get
                 {
                     if (this._marks == null)
-                        return new int[5];
+                        return null;
                     int[] copy = new int[5];
                     Array.Copy(_marks, copy, 5);
                     return copy;
@@ -30,6 +30,8 @@ namespace Lab_6
             {
                 get
                 {
+                    if (this.Marks == null)
+                        return 0;
                     int stylePoints = 0;
                     int bestMark = int.MinValue;
                     int worstMark = int.MaxValue;
@@ -71,6 +73,8 @@ namespace Lab_6
                     return;
                 if (marks == null)
                     return;
+                if (this.Marks == null)
+                    return;
                 if (marks.Length != 5)
                     return;
 
@@ -91,7 +95,7 @@ namespace Lab_6
                     return;
 
                 Participant[] sorted = array.OrderByDescending(p => p.Result).ToArray();
-                array = sorted;
+                Array.Copy(sorted, array, sorted.Length);
             }
         }
     }

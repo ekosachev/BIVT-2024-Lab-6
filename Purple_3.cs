@@ -14,33 +14,33 @@ namespace Lab_6
 
             public string Name => _name;
             public string Surname => _surname;
-            public double[] Marks
+            public double[]? Marks
             {
                 get
                 {
                     if (this._marks == null)
-                        return new double[7];
+                        return null;
                     double[] copy = new double[_marks.Length];
                     Array.Copy(_marks, copy, _marks.Length);
                     return copy;
                 }
             }
 
-            public int[] Places
+            public int[]? Places
             {
                 get
                 {
                     if (this._marks == null)
-                        return new int[7];
+                        return null;
                     int[] copy = new int[_places.Length];
                     Array.Copy(_places, copy, _places.Length);
                     return copy;
                 }
             }
 
-            public int Score => Places.Sum();
-            public double TotalMarks => Marks.Sum();
-            public int BestPlace => Places.Min();
+            public int Score => this.Places != null ? this.Places.Sum() : 0;
+            private double TotalMarks => this.Marks != null ? this.Marks.Sum() : 0;
+            private int BestPlace => this.Places != null ? this.Places.Min() : int.MaxValue;
 
             public void Print() { }
 
@@ -121,12 +121,15 @@ namespace Lab_6
                 if (array.Any(p => !p._placesFilled))
                     return;
 
+                if (array.Any(p => p.Places == null) || array.Any(p => p.Marks == null))
+                    return;
+
                 Participant[] sortedArray = array
                     .OrderByDescending(p => p.Score)
                     .ThenBy(p => p.BestPlace)
                     .ThenByDescending(p => p.TotalMarks)
                     .ToArray();
-                array = sortedArray;
+                Array.Copy(sortedArray, array, sortedArray.Length);
             }
         }
     }
