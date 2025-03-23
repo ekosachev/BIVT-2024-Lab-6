@@ -110,6 +110,9 @@ namespace Lab_6
                     }
                     participants[participant]._placesFilled = true;
                 }
+
+                Participant[] sortedArray = participants.OrderBy(p => p._places.Last()).ToArray();
+                Array.Copy(sortedArray, participants, sortedArray.Length);
             }
 
             public static void Sort(Participant[] array)
@@ -126,10 +129,28 @@ namespace Lab_6
 
                 Participant[] sortedArray = array
                     .OrderByDescending(p => p.Score)
-                    .ThenBy(p => p.BestPlace)
+                    .ThenBy(p => p, new BestPlaceComparer())
                     .ThenByDescending(p => p.TotalMarks)
                     .ToArray();
                 Array.Copy(sortedArray, array, sortedArray.Length);
+            }
+        }
+
+        private class BestPlaceComparer : IComparer<Purple_3.Participant>
+        {
+            int IComparer<Purple_3.Participant>.Compare(
+                Purple_3.Participant x,
+                Purple_3.Participant y
+            )
+            {
+                for (int i = 0; i < x.Places.Length; i++)
+                {
+                    if (x.Places[i] > y.Places[i])
+                        return -1;
+                    if (x.Places[i] < y.Places[i])
+                        return 1;
+                }
+                return 0;
             }
         }
     }

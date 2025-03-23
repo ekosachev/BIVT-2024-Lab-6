@@ -50,15 +50,18 @@ namespace Lab_6
                     switch (questionNumber)
                     {
                         case 1:
-                            if (response.Animal != "")
+                            if (response.Animal != "" && response.Animal == this.Animal)
                                 result++;
                             break;
                         case 2:
-                            if (response.CharacterTrait != "")
+                            if (
+                                response.CharacterTrait != ""
+                                && response.CharacterTrait == this.CharacterTrait
+                            )
                                 result++;
                             break;
                         case 3:
-                            if (response.Concept != "")
+                            if (response.Concept != "" && response.Concept == this.Concept)
                                 result++;
                             break;
                         default:
@@ -119,10 +122,10 @@ namespace Lab_6
                 this._responses = newArray;
             }
 
-            public string[]? GetTopResponses(int question)
+            public string[] GetTopResponses(int question)
             {
                 if (this.Responses == null)
-                    return null;
+                    return default;
                 if (question < 1 || question > 3)
                     return new string[0];
                 if (this.Responses.Length == 0)

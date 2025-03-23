@@ -68,7 +68,7 @@ namespace Lab_6
 
             public Group(Group otherGroup)
             {
-                if (otherGroup.Sportsmen == null)
+                if (otherGroup._sportsmen == null)
                     return;
                 this._name = otherGroup.Name;
                 this._sportsmen = new Sportsman[] { };
@@ -124,10 +124,10 @@ namespace Lab_6
                 Array.Copy(sorted, this.Sportsmen, sorted.Length);
             }
 
-            public static Group? Merge(Group group1, Group group2)
+            public static Group Merge(Group group1, Group group2)
             {
                 if (group1.Sportsmen == null || group2.Sportsmen == null)
-                    return null;
+                    return default;
                 Sportsman[] array1 = group1.Sportsmen;
                 Sportsman[] array2 = group2.Sportsmen;
 
