@@ -43,33 +43,13 @@ namespace Lab_6
                 if (questionNumber < 1 || questionNumber > 3)
                     return 0;
 
-                int result = 0;
+                string thisAnswer = this.GetAnswer(questionNumber);
 
-                foreach (Response response in responses)
-                {
-                    switch (questionNumber)
-                    {
-                        case 1:
-                            if (response.Animal != "" && response.Animal == this.Animal)
-                                result++;
-                            break;
-                        case 2:
-                            if (
-                                response.CharacterTrait != ""
-                                && response.CharacterTrait == this.CharacterTrait
-                            )
-                                result++;
-                            break;
-                        case 3:
-                            if (response.Concept != "" && response.Concept == this.Concept)
-                                result++;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-
-                return result;
+                return responses
+                    .Where(r => r.GetAnswer(questionNumber) != "")
+                    .Where(r => r.GetAnswer(questionNumber) == thisAnswer)
+                    .ToArray()
+                    .Length;
             }
 
             public void Print()
@@ -137,6 +117,7 @@ namespace Lab_6
                         r => r.GetAnswer(question),
                         (answer, answers) => new { Key = answer, Count = answers.Count() }
                     )
+                    .Where(r => r.Key != "")
                     .OrderByDescending(r => r.Count)
                     .ToArray();
 

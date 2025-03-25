@@ -42,7 +42,12 @@ namespace Lab_6
             private double TotalMarks => this.Marks != null ? this.Marks.Sum() : 0;
             private int BestPlace => this.Places != null ? this.Places.Min() : int.MaxValue;
 
-            public void Print() { }
+            public void Print()
+            {
+                System.Console.WriteLine(
+                    $"{this.Name}\t{this.Surname}\t\t{this.Score}\t{String.Join(", ", this.Places)}\t{this.TotalMarks}"
+                );
+            }
 
             public Participant(string name, string surname)
             {
@@ -143,13 +148,21 @@ namespace Lab_6
                 Purple_3.Participant y
             )
             {
+                bool aHigher = false;
+                bool bHigher = false;
                 for (int i = 0; i < x.Places.Length; i++)
                 {
                     if (x.Places[i] > y.Places[i])
-                        return -1;
+                        bHigher = true;
                     if (x.Places[i] < y.Places[i])
-                        return 1;
+                        aHigher = true;
                 }
+                if (aHigher && bHigher)
+                    return 0;
+                if (aHigher)
+                    return 1;
+                if (bHigher)
+                    return -1;
                 return 0;
             }
         }
