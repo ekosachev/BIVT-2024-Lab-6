@@ -129,7 +129,7 @@ namespace Lab_6
 
                 Participant[] sortedArray = array
                     .OrderByDescending(p => p.Score)
-                    .ThenBy(p => p, new BestPlaceComparer())
+                    .ThenByDescending(p => p, new BestPlaceComparer())
                     .ThenByDescending(p => p.TotalMarks)
                     .ToArray();
                 Array.Copy(sortedArray, array, sortedArray.Length);
