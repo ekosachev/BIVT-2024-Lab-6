@@ -46,7 +46,7 @@ namespace Lab_6
                 string thisAnswer = this.GetAnswer(questionNumber);
 
                 return responses
-                    .Where(r => r.GetAnswer(questionNumber) != "")
+                    .Where(r => r.GetAnswer(questionNumber) != null)
                     .Where(r => r.GetAnswer(questionNumber) == thisAnswer)
                     .ToArray()
                     .Length;

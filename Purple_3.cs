@@ -134,36 +134,10 @@ namespace Lab_6
 
                 Participant[] sortedArray = array
                     .OrderByDescending(p => p.Score)
-                    .ThenByDescending(p => p, new BestPlaceComparer())
+                    .ThenBy(p => p.Places.Min())
                     .ThenByDescending(p => p.TotalMarks)
                     .ToArray();
                 Array.Copy(sortedArray, array, sortedArray.Length);
-            }
-        }
-
-        private class BestPlaceComparer : IComparer<Purple_3.Participant>
-        {
-            int IComparer<Purple_3.Participant>.Compare(
-                Purple_3.Participant x,
-                Purple_3.Participant y
-            )
-            {
-                bool aHigher = false;
-                bool bHigher = false;
-                for (int i = 0; i < x.Places.Length; i++)
-                {
-                    if (x.Places[i] > y.Places[i])
-                        bHigher = true;
-                    if (x.Places[i] < y.Places[i])
-                        aHigher = true;
-                }
-                if (aHigher && bHigher)
-                    return 0;
-                if (aHigher)
-                    return 1;
-                if (bHigher)
-                    return -1;
-                return 0;
             }
         }
     }
