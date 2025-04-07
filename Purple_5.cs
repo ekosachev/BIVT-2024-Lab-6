@@ -117,11 +117,15 @@ namespace Lab_6
                         r => r.GetAnswer(question),
                         (answer, answers) => new { Key = answer, Count = answers.Count() }
                     )
-                    .Where(r => r.Key != "")
+                    .Where(r => r.Key != "" && r.Key != null)
                     .OrderByDescending(r => r.Count)
                     .ToArray();
 
-                return sorted.Take(int.Min(5, sorted.Length)).Select(r => r.Key).ToArray();
+                return sorted
+                    .Take(int.Min(5, sorted.Length))
+                    .Where(r => r.Key != "" && r.Key != null)
+                    .Select(r => r.Key)
+                    .ToArray();
             }
 
             public void Print()
